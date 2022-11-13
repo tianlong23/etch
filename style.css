@@ -1,0 +1,24 @@
+#grid {
+    display: flex;
+    height: 400px;
+    width: 400px;
+    flex-direction: column;
+    user-select: none;
+}
+
+.row {
+    border: .5px solid black;
+    flex-grow:1;
+    display: flex;
+}
+
+.col {
+    display: flex;
+    border: .5px solid black;
+    flex-grow: 1;
+    background-color: rgb(255, 255, 255);
+}
+
+.col.active {
+    background-color: black;
+}
