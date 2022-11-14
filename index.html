@@ -10,25 +10,33 @@
 </head>
 
 <body>
-    <div class = 'colorPickerContainer'>
-        <input type = 'color' id="colorPicker" value = #000000>
+    <div class="header">Etch-a-Sketch</div>
+    <div class="main">
+        <div class="controls">
+            <div class = 'colorPickerContainer'>Select a Color
+                <input type = 'color' id="colorPicker" value = #000000>
+            </div>
+            <div class ="eraser">
+                <button id="eraserButton">Eraser</button>
+            </div>
+            <div class="randomContainer">
+                <button id="randomColor">Rainbow Color</button>
+            </div>
+            <div class ="opacityContainer">
+                <button id="opacity">Fade to Black</button>
+            </div>
+            <div class="resetContainer">
+                <button id="resetButton">Reset</button>
+            </div>
+            <div class = 'sliderContainer'> 
+                <div id="sliderText">Select Grid Density</div>
+                <input id = "myRange" type="range" min = "1" max="100" value="16" class = "slider" >
+            </div>
+        </div>
+        <div class="gridContainer">
+            <div id="grid"></div>
+        </div>
     </div>
-    <div class ="eraser">
-        <button id="eraserButton">Eraser</button>
-    </div>
-    <div class="randomContainer">
-        <button id="randomColor">Rainbow Color</button>
-    </div>
-    <div class ="opacityContainer">
-        <button id="opacity">Fade to Black</button>
-    </div>
-    <div class="resetContainer">
-        <button id="resetButton">Reset</button>
-    </div>
-    <div class = 'sliderContainer'>
-        <input type="range" min = "1" max="100" value="16" class = "slider" id = "myRange">
-    </div>
-    <div id="grid"></div>
     <script src='script.js'></script>
 </body>
 </html>

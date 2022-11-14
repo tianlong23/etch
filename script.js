@@ -1,31 +1,9 @@
-//create a grid based on input (not at first just 16x16) of div squares
-//use for loops to create X number of rows with X divs inside of them. 
-
-//create function
-//function recieves an input of the size of the grid
-//function has nested for loops inside
-    //main for loop produces the divs for the rows
-        //append the div to the container or previous row div
-    //nested for loop produces the divs for the columns
-        //append the div to the previous column div
-
-
-//how to get the value to update based on the slider input and be provided to the create grid function  
-
-
-//create slider for user to provide an input, max value should be 100
-//slider sets the input value for the grid
-//input value is set in the place of the "i<x" for x and then populates the grid
-
-
-
-
-
+//global variables for the grid, vells, and toggling
 const grid = document.getElementById('grid');
 var gridEntry = grid.getElementsByClassName('col');
 var isToggling = false;
 
-
+//function to create a new grid based on the slider input
 function createNewGrid(input) {
     const grid = document.getElementById('grid');
     for(var i = 0; i < input; i++) {
@@ -41,6 +19,7 @@ function createNewGrid(input) {
     }
 }
 
+//create the first grid when the page is loaded
 function createGrid () { 
     const grid = document.getElementById('grid');
     for(var i = 0; i < 16; i++) {
@@ -58,6 +37,7 @@ function createGrid () {
 
 createGrid()
 
+//grabs input from the slider, and inputs it into createNewGrid
 var inputValue = document.getElementById('myRange')
 inputValue.addEventListener('click', function () {
         removeGrid();
@@ -67,6 +47,7 @@ inputValue.addEventListener('click', function () {
         start();
     });
 
+//clears the grid and creates a new grid based on the current input from the slider
 const reset = document.getElementById('resetButton');
 reset.addEventListener('click', function () {
     removeGrid();
@@ -75,6 +56,7 @@ reset.addEventListener('click', function () {
     start();
 })
 
+//function to remove the grid
 function removeGrid() {
    
     rowDiv = document.getElementsByClassName('row');
@@ -84,14 +66,7 @@ function removeGrid() {
     };
 };
 
-function enableToggleRandom(e) {
-    console.log('enable toggle Random');
-    isToggling = true;
-    if (e.target !== grid) {
-        toggleRandom(e);
-    };
-};
-
+//function that enable toggles for a single color, used specifically to note when the mouse button is clicked down
 function enableToggle (e) {
     console.log('enable toggle');
     isToggling = true;
@@ -100,12 +75,13 @@ function enableToggle (e) {
     };
 };
 
+//function to disable toggle when the mouse button is not being held down anymore
 function disableToggle () {
     console.log('disable toggle')
     isToggling = false;
 };
 
-
+//function that takes the input from the color selector, and applies it to the input for the mouseenter event
 function toggle(e) {
     if (isToggling === false) {
         return;
@@ -116,6 +92,7 @@ function toggle(e) {
     e.target.style.backgroundColor = colorVal;
 };
 
+//function to take the input from the color selector and update the input for the toggle function
 function inputColor () {
     
     const colorPicker = document.getElementById('colorPicker');
@@ -129,6 +106,7 @@ inputColor();
 
 eraser();
 
+//function that listens for a click on the eraser button, and then changes the input color to white
 function eraser() {
     const eraserContainer = document.getElementById('eraserButton');
     eraserContainer.addEventListener('click', function () {
@@ -139,6 +117,7 @@ function eraser() {
 
 random();
 
+//function that listens for a click on the rainbow button and starts the random color function
 function random() {
     const randomButton = document.getElementById('randomColor');
     randomButton.addEventListener('click', function () {
@@ -147,6 +126,16 @@ function random() {
 
 }
 
+//function that turns on toggling for the random colors
+function enableToggleRandom(e) {
+    console.log('enable toggle Random');
+    isToggling = true;
+    if (e.target !== grid) {
+        toggleRandom(e);
+    };
+};
+
+//function that creates a new random color and applies it as the background color to cells based on mouseenter
 function toggleRandom(e) {
     if (isToggling === false) {
         return;
@@ -158,6 +147,7 @@ function toggleRandom(e) {
     e.target.style.backgroundColor = "#" + randomColor;
 }
 
+//function that starts the random toggling by creating mouseover events
 function startRandom() {
     
     grid.onmousedown = enableToggleRandom;
@@ -168,6 +158,7 @@ function startRandom() {
     
 }
 
+//function that creates the increased opacity by creating mouseover events (shading)
 function increaseOpacity () {
     var opacity = document.getElementById('opacity');
     opacity.addEventListener('click', function() {
@@ -177,6 +168,7 @@ function increaseOpacity () {
 
 increaseOpacity();
 
+//function that starts toggling for the opacity (shading)
 function enableToggleOpacity(e) {
     console.log('enable toggle Opacity');
     isToggling = true;
@@ -185,7 +177,7 @@ function enableToggleOpacity(e) {
     };
 };
 
-
+//function that takes the existing background color, and makes it 10% darker each mouseover
 function toggleOpacity(e) {
     if (isToggling === false) {
         return;
@@ -199,66 +191,28 @@ function toggleOpacity(e) {
     r = rgb[0];
     g = rgb[1];
     b = rgb[2];
-    console.log('r' + r)
-    console.log('g' + g)
-    console.log('b' + b)
     r = r-25.5;
     g = g-25.5;
     b = b-25.5;
-    console.log('r' + r)
-    console.log('g' + g)
-    console.log('b' + b)
-
-    //need to grab the r, g, and b values and then put them into the variables, add some value to make them darker
-    //then put the new values into the last line in this object
     e.target.style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')';
     console.log(e.target.style.backgroundColor);
 };
 
-//Yes but you don't need to store them. 
-//You do the sequence of mouse over div -> grab current divs rgb value -> add some r g and b to it
-//So its always a bit darker (or lighter, you can set up both) than the current color.
-
+//function that removes the event listeners and therefore functions for the standard color input and random color
+//and initiates the increased opacity (shading) functions
 function startOpacity() {
     
     grid.onmousedown = enableToggleOpacity;
     for (var x = 0; x < gridEntry.length; x++) {
         gridEntry[x].removeEventListener('mouseenter', toggleRandom, false)
         gridEntry[x].removeEventListener('mouseenter', toggle, false)
-        gridEntry[x].addEventListener('mouseenter', toggleOpacity, false);
-            /*console.log('target background color: ' + e.target.style.backgroundColor);
-            var rgb = e.target.style.backgroundColor;
-            console.log(rgb);
-            //have it on mouse enter, for divs that already have color. 
-            //need to figure out how to get it to do on mousedown and hover. 
-            rgb = rgb.replace(/[^\d,]/g, '').split(',');
-            console.log(rgb);
-            r = rgb[0];
-            console.log('r1: ' + r)
-            g = rgb[1];
-            b = rgb[2];
-           
-            console.log('r' + r)
-            console.log('g' + g)
-            console.log('b' + b)
-            r = r-25.5;
-            g = g-25.5;
-            b = b-25.5;
-            console.log('r' + r)
-            console.log('g' + g)
-            console.log('b' + b)
-        
-            //need to grab the r, g, and b values and then put them into the variables, add some value to make them darker
-            //then put the new values into the last line in this object
-            e.target.style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')';
-            console.log(e.target.style.backgroundColor); */
-        
+        gridEntry[x].addEventListener('mouseenter', toggleOpacity, false);        
         };
     }
     grid.onmouseup = disableToggle;
     
 
-
+//function that starts the mouseenter while the button is clicked feature by adding an event listener to mouseenter that only fires after mousedown. 
 function start () {
     console.log('start function')
     grid.onmousedown = enableToggle;
